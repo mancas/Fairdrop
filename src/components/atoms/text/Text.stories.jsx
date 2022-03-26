@@ -43,4 +43,5 @@ export const Primary = Template.bind({})
 Primary.args = {
   weight: 'regular',
   children: 'Text',
+  className: '',
 }
