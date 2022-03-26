@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Text from './Text'
+import Text, { ALIGN, ELEMENTS, SIZES, TRANSFORM, VARIANTS } from './Text'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,6 +13,26 @@ export default {
       </div>
     ),
   ],
+  argTypes: {
+    variant: {
+      options: VARIANTS,
+    },
+    size: {
+      options: SIZES,
+    },
+    element: {
+      options: ELEMENTS,
+    },
+    align: {
+      options: ALIGN,
+    },
+    transform: {
+      options: TRANSFORM,
+    },
+    weight: {
+      options: ['light', 'regular', 'medium', 'semibold', 'bold', 'black'],
+    },
+  },
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -21,6 +41,6 @@ const Template = (args) => <Text {...args} />
 export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  // variant: 'green',
+  weight: 'regular',
   children: 'Text',
 }
