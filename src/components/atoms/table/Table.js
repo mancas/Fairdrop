@@ -149,7 +149,7 @@ const NavigationWrapper = styled.div`
   gap: 6px;
 `
 
-const TablePagination = ({ count, rowsPerPage, page, onPageChange, ...props }) => {
+const TablePagination = ({ count, rowsPerPage, page, onPageChange, variant, ...props }) => {
   const theme = useTheme()
 
   const handleOnNextPageClick = useCallback(() => {
@@ -173,33 +173,37 @@ const TablePagination = ({ count, rowsPerPage, page, onPageChange, ...props }) =
     if (currentPageLastElement > count) {
       currentPageLastElement = count
     }
-    return `${currentPageFirstElement}-${currentPageLastElement} de ${count}`
+    return `${currentPageFirstElement}-${currentPageLastElement} of ${count}`
   }, [count, rowsPerPage, page])
 
   return (
     <StyledTablePagination {...props}>
-      <Text>{paginationInfo}</Text>
+      <Text variant={variant}>{paginationInfo}</Text>
       <NavigationWrapper>
         <ButtonIcon
-          icon={<FiChevronLeft size="24px" color={theme?.colors[VARIANT.WHITE]?.main} />}
+          icon={<FiChevronLeft size="24px" color={theme?.colors[variant]?.main} />}
           onClick={handleOnPrevPageClick}
           disabled={isPrevPageDisabled}
           tabIndex={-1}
-          aria-label="Ir a la página anterior"
-          title="Ir a la página anterior"
+          aria-label="Go to previous page"
+          title="Go to previous page"
         />
 
         <ButtonIcon
-          icon={<FiChevronRight size="24px" color={theme?.colors[VARIANT.WHITE]?.main} />}
+          icon={<FiChevronRight size="24px" color={theme?.colors[variant]?.main} />}
           onClick={handleOnNextPageClick}
           disabled={isNextPageDisabled}
           tabIndex={0}
-          aria-label="Ir a la siguiente página"
-          title="Ir a la siguiente página"
+          aria-label="Go to next page"
+          title="Go to next page"
         />
       </NavigationWrapper>
     </StyledTablePagination>
   )
+}
+
+TablePagination.defaultProps = {
+  variant: VARIANT.NTRL_DARK,
 }
 
 const IconWrapper = styled.span`
