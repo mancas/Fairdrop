@@ -57,7 +57,7 @@ const getWeight = (weight) => {
   return res
 }
 
-const styles = css`
+const StyledTextP = styled.p`
   margin: 0;
   padding: 0;
   color: ${({ theme, variant }) => theme.colors?.[variant]?.main};
@@ -86,77 +86,14 @@ const styles = css`
     `}
 `
 
-const StyledTextP = styled.p`
-  ${styles}
-`
-
-const StyledTextSpan = styled.span`
-  ${styles}
-`
-
-const StyledTextH1 = styled.h1`
-  ${styles}
-`
-
-const StyledTextH2 = styled.h2`
-  ${styles}
-`
-
-const StyledTextH3 = styled.h3`
-  ${styles}
-`
-
-const StyledTextH4 = styled.h4`
-  ${styles}
-`
-
-const StyledTextH5 = styled.h5`
-  ${styles}
-`
-
-const StyledTextH6 = styled.h6`
-  ${styles}
-`
-
-const Text = ({ element, ...props }) => {
-  const StyledComponent = useMemo(() => {
-    switch (element) {
-      case 'p':
-        return StyledTextP
-
-      case 'span':
-        return StyledTextSpan
-
-      case 'h1':
-        return StyledTextH1
-
-      case 'h2':
-        return StyledTextH2
-
-      case 'h3':
-        return StyledTextH3
-
-      case 'h4':
-        return StyledTextH4
-
-      case 'h5':
-        return StyledTextH5
-
-      case 'h6':
-        return StyledTextH6
-
-      default:
-        return StyledTextP
-    }
-  }, [element])
-
-  return <StyledComponent {...props} />
+const Text = ({ ...props }) => {
+  return <StyledTextP {...props} />
 }
 
 Text.defaultProps = {
   size: SIZES[3],
   variant: VARIANTS[0],
-  element: ELEMENTS[0],
+  as: ELEMENTS[0],
   weight: 'regular',
   align: ALIGN[0],
   transform: TRANSFORM[0],

@@ -20,7 +20,7 @@ export default {
     size: {
       options: SIZES,
     },
-    element: {
+    as: {
       options: ELEMENTS,
     },
     align: {
