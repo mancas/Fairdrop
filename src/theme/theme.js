@@ -191,5 +191,16 @@ export const theme = {
         color: colors.white.main,
       },
     },
+    link: {
+      font: {
+        size: '16px',
+        weight: 400,
+        color: colors.ntrl_dark.main,
+        active: {
+          weight: 700,
+          color: colors.primary.main,
+        },
+      },
+    },
   },
 }
