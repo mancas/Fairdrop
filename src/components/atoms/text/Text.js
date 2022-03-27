@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 
 export const ALIGN = ['left', 'center', 'right']
@@ -86,7 +86,7 @@ const StyledTextP = styled.p`
     `}
 `
 
-const Text = ({ ...props }) => {
+export const Text = ({ ...props }) => {
   return <StyledTextP {...props} />
 }
 
