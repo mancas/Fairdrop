@@ -42,6 +42,7 @@ const HeaderRight = styled.div`
   align-items: center;
   gap: 24px;
   margin-left: auto;
+`
 
 const Header = ({ className }) => {
   const [{ mailbox }] = useMailbox()
