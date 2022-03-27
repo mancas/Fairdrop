@@ -36,9 +36,9 @@ const BadgeContainer = styled.span`
   align-items: center;
   box-sizing: border-box;
   ${({ theme, variant }) => css`
-    font-size: ${theme.components?.badge?.font?.size};
-    font-weight: ${theme.components?.badge?.font?.weight};
-    color: ${theme.components?.badge?.font?.color};
+    font-size: 12px;
+    font-weight: 500;
+    color: ${theme.colors.white.main};
     background-color: ${theme.colors?.[variant]?.main};
   `};
   min-width: 20px;

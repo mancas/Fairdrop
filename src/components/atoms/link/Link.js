@@ -19,13 +19,13 @@ import styled, { css } from 'styled-components/macro'
 
 export const Link = memo(styled.a`
   ${({ theme, isActive }) => css`
-    font-size: ${theme.components?.link?.font?.size};
-    font-weight: ${isActive ? theme.components?.link?.font?.active?.weight : theme.components?.link?.font?.weight};
-    color: ${isActive ? theme.components?.link?.font?.active?.color : theme.components?.link?.font?.color};
+    font-size: 16px;
+    font-weight: ${isActive ? 700 : 400};
+    color: ${isActive ? theme.colors.primary.main : theme.colors.ntrl_dark.main};
     transition: color 0.3s ease;
 
     &:hover {
-      color: ${theme.components?.link?.font?.active?.color};
+      color: ${theme.colors.primary.main};
     }
   `};
 `)
