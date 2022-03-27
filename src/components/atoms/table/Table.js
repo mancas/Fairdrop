@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import styled, { css, useTheme } from 'styled-components'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { RiSortDesc } from 'react-icons/ri'
-import { VARIANT } from 'theme'
+import { VARIANT } from '../../../theme/theme'
 import { ButtonIcon } from '../buttonIcon/ButtonIcon'
 import Text from '../text/Text'
 

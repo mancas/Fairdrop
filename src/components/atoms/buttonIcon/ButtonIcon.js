@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { VARIANT } from 'theme'
+import { VARIANT } from '../../../theme/theme'
 
 const StyledButton = styled.button`
   position: relative;
