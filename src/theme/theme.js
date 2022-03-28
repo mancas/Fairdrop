@@ -1,5 +1,3 @@
-import { transparentize } from 'polished'
-
 export const VARIANT = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
@@ -8,6 +6,7 @@ export const VARIANT = {
   WARNING: 'warning',
   INFO: 'info',
   NTRL_LIGHT: 'ntrl_light',
+  NTRL_LIGHTER: 'ntrl_lighter',
   NTRL_DARK: 'ntrl_dark',
   NTRL_DARKEST: 'ntrl_darkest',
   WHITE: 'white',
@@ -50,6 +49,10 @@ const colors = {
   },
   ntrl_light: {
     main: '#cccccc',
+    contrast: '#ffffff',
+  },
+  ntrl_lighter: {
+    main: '#f4f4f4',
     contrast: '#ffffff',
   },
   ntrl_dark: {
