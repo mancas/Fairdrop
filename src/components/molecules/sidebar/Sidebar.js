@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { matchPath } from 'react-router-dom'
 import styled from 'styled-components/macro'
@@ -54,14 +54,18 @@ const Breadcrumb = styled.div`
 
 export const Sidebar = memo(({ headline, items, ...props }) => {
   const location = useLocation()
-  console.info(Breadcrumb)
+
+  const activePath = useMemo(() => {
+    return items.find(({ path }) => matchPath(location?.pathname, { path: path, exact: true }))?.label ?? ''
+  }, [location, items])
+
   return (
     <Container {...props}>
       <Breadcrumb>
         <Text size="m" weight="regular" variant="ntrl_dark">
           {headline} /{' '}
           <Text size="m" weight="medium" variant="ntrl_darkt" as="span">
-            Sent
+            {activePath}
           </Text>
         </Text>
       </Breadcrumb>
