@@ -6,8 +6,23 @@ export default {
   title: 'Example/Sidebar',
   component: Sidebar,
   args: {
-    count: 0,
-    href: '/fake-path',
+    items: [
+      {
+        label: 'Received',
+        notifications: 2,
+        path: '/received',
+      },
+      {
+        label: 'Sent',
+        notifications: 0,
+        path: '/sent',
+      },
+      {
+        label: 'My honest inbox',
+        notifications: 100,
+        path: '/honest',
+      },
+    ],
   },
 }
 

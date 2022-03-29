@@ -15,8 +15,11 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React, { memo } from 'react'
-import styled, { css } from 'styled-components/macro'
-import { Text } from '../../../components'
+import { useLocation } from 'react-router-dom'
+import { matchPath } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import { DEVICE_SIZE } from '../../../theme/theme'
+import { Text } from '../../atoms/text/Text'
 import { SidebarLink } from '../sidebarLink/SidebarLink'
 
 const Container = styled.div`
@@ -37,24 +40,53 @@ const List = styled.ul`
   margin-top: 40px;
 `
 
-export const Sidebar = memo(({ headline, ...props }) => {
+const Breadcrumb = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+
+  @media (min-width: ${DEVICE_SIZE.TABLET}) {
+    display: none;
+  }
+`
+
+export const Sidebar = memo(({ headline, items, ...props }) => {
+  const location = useLocation()
+  console.info(Breadcrumb)
   return (
-    <Container>
+    <Container {...props}>
+      <Breadcrumb>
+        <Text size="m" weight="regular" variant="ntrl_dark">
+          {headline} /{' '}
+          <Text size="m" weight="medium" variant="ntrl_darkt" as="span">
+            Sent
+          </Text>
+        </Text>
+      </Breadcrumb>
       <Content>
-        <Text size="xl" weight="light">
+        <Text size="xl" weight="light" variant="ntrl_dark">
           {headline}
         </Text>
 
         <List>
-          <SidebarLink>Sent</SidebarLink>
-
-          <SidebarLink count={2}>Received</SidebarLink>
-
-          <SidebarLink>My honest inbox</SidebarLink>
+          {items.map((item) => {
+            const isActive = matchPath(location?.pathname, { path: item.path, exact: true })
+            return (
+              <SidebarLink key={item.path} to={item.path} count={item.notifications} isActive={isActive}>
+                {item.label}
+              </SidebarLink>
+            )
+          })}
         </List>
       </Content>
     </Container>
   )
 })
+
+Sidebar.defaultProps = {
+  items: [],
+}
 
 Sidebar.displayName = 'Sidebar'
