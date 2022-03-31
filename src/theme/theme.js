@@ -129,6 +129,22 @@ export const theme = {
         },
       },
     },
+    icon: {
+      sizes: {
+        m: {
+          width: '24px',
+          height: '24px',
+        },
+        l: {
+          width: '48px',
+          height: '48px',
+        },
+        xl: {
+          width: '66px',
+          height: '66px',
+        },
+      },
+    },
     input: {
       fontSize: '14px',
       backgroundColor: 'transparent',

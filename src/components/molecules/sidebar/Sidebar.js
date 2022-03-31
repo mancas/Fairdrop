@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React, { memo, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { matchPath } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { DEVICE_SIZE } from '../../../theme/theme'
+import { ButtonIcon } from '../../atoms/buttonIcon/ButtonIcon'
+import { Icon } from '../../atoms/icon/Icon'
 import { Text } from '../../atoms/text/Text'
 import { SidebarLink } from '../sidebarLink/SidebarLink'
 
@@ -27,10 +29,48 @@ const Container = styled.div`
   width: 100%;
   max-width: 322px;
   height: 100%;
+  overflow: hidden;
+
+  @media (max-width: ${DEVICE_SIZE.TABLET}) {
+    max-width: unset;
+    height: auto;
+  }
 `
 
 const Content = styled.nav`
   padding: 24px 40px;
+
+  @media (max-width: ${DEVICE_SIZE.TABLET}) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    transition: transform 0.3s ease-in;
+    transform: ${({ opened }) => (opened ? 'translateX(0%)' : 'translateX(-100%)')};
+    background-color: ${({ theme }) => theme?.colors?.ntrl_lighter?.main};
+    padding: 24px 56px;
+  }
+`
+
+const CloseButton = styled(ButtonIcon)``
+
+const ContentHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: ${DEVICE_SIZE.TABLET}) {
+    margin-left: -46px;
+  }
+
+  @media (min-width: ${DEVICE_SIZE.TABLET}) {
+    ${CloseButton} {
+      display: none;
+    }
+  }
 `
 
 const List = styled.ul`
@@ -44,7 +84,7 @@ const Breadcrumb = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   padding: 16px 20px;
 
   @media (min-width: ${DEVICE_SIZE.TABLET}) {
@@ -52,16 +92,59 @@ const Breadcrumb = styled.div`
   }
 `
 
+const MenuWrapper = styled.div`
+  position: relative;
+  display: flex;
+
+  &:before {
+    content: '';
+    display: ${({ hasNotifications }) => (hasNotifications ? 'block' : 'none')};
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    z-index: 10;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: ${({ theme }) => `solid 2px ${theme?.colors?.ntrl_lighter?.main}`};
+    background-color: ${({ theme }) => theme?.colors?.primary?.main};
+  }
+`
+
 export const Sidebar = memo(({ headline, items, ...props }) => {
   const location = useLocation()
+  const [opened, setOpened] = useState(false)
+
+  const handleOpenSidebar = useCallback(() => {
+    setOpened(true)
+  }, [])
+
+  const handleCloseSidebar = useCallback(() => {
+    setOpened(false)
+  }, [])
 
   const activePath = useMemo(() => {
     return items.find(({ path }) => matchPath(location?.pathname, { path: path, exact: true }))?.label ?? ''
   }, [location, items])
 
+  const hasNotifications = useMemo(() => {
+    return items.some(({ notifications }) => notifications && notifications > 0)
+  }, [items])
+
   return (
     <Container {...props}>
       <Breadcrumb>
+        <ButtonIcon
+          variant="transparent"
+          icon={
+            <MenuWrapper hasNotifications={hasNotifications}>
+              <Icon name="menu" />
+            </MenuWrapper>
+          }
+          onClick={handleOpenSidebar}
+        />
+
         <Text size="m" weight="regular" variant="ntrl_dark">
           {headline} /{' '}
           <Text size="m" weight="medium" variant="ntrl_darkt" as="span">
@@ -69,10 +152,14 @@ export const Sidebar = memo(({ headline, items, ...props }) => {
           </Text>
         </Text>
       </Breadcrumb>
-      <Content>
-        <Text size="xl" weight="light" variant="ntrl_dark">
-          {headline}
-        </Text>
+      <Content opened={opened}>
+        <ContentHeader>
+          <CloseButton variant="transparent" icon={<Icon name="close" />} onClick={handleCloseSidebar} />
+
+          <Text size="xl" weight="light" variant="ntrl_dark">
+            {headline}
+          </Text>
+        </ContentHeader>
 
         <List>
           {items.map((item) => {
