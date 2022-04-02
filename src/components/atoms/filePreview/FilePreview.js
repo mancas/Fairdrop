@@ -18,7 +18,7 @@ import { saturate, lighten } from 'polished'
 import React, { memo, useMemo } from 'react'
 import styled from 'styled-components/macro'
 import { VARIANT } from '../../../theme/theme'
-import { Icon } from '../../atoms/icon/Icon'
+import { Icon } from '../icon/Icon'
 
 const Container = styled.div`
   width: ${({ isImage }) => (isImage ? '242px' : '200px')};
