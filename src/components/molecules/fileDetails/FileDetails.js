@@ -37,7 +37,6 @@ const Container = styled.div`
 
   @media (max-width: ${DEVICE_SIZE.TABLET}) {
     max-width: 100%;
-    border: none;
   }
 `
 
