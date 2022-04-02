@@ -23,7 +23,16 @@ import { toast } from 'react-toastify'
 import WorkingLayout from '../../../../components/layout/working/WorkingLayout'
 import Notification from '../../../../components/molecules/notification/Notification'
 import styled from 'styled-components/macro'
-import { Table, TableBody, TableCell, TableHead, TableRow, SwitchFileIcon, Box } from '../../../../components'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  SwitchFileIcon,
+  Box,
+  ButtonFlat,
+} from '../../../../components'
 
 const Container = styled.div`
   width: 100%;
@@ -106,10 +115,18 @@ const DashboardReceivedScreen = () => {
                 }
 
                 return (
-                  <TableRow key={message?.hash?.address}>
+                  <TableRow
+                    key={message?.hash?.address}
+                    hoverActions={
+                      <Box gap="32px">
+                        <ButtonFlat variant="primary">Copy link</ButtonFlat>
+                        <ButtonFlat variant="negative">Delete</ButtonFlat>
+                      </Box>
+                    }
+                  >
                     <TableCell>
                       <Box gap="14px" vAlign="center">
-                        <SwitchFileIcon className type={file.type} />
+                        <SwitchFileIcon className type={file.type} onClick={message?.saveAs ?? undefined} />
                         <Text size="sm" variant="black">
                           {file?.name ?? 'Unkown'}
                         </Text>

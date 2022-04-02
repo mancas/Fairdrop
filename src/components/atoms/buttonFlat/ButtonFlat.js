@@ -29,6 +29,7 @@ export const ButtonFlat = memo(styled.button`
   text-align: center;
   background: transparent;
   border: 0;
+  cursor: pointer;
 
   ${({ theme, variant = 'primary' }) => css`
     color: ${theme.colors[variant].main};

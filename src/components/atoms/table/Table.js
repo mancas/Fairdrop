@@ -62,9 +62,9 @@ const TableRowOverlay = styled.div`
   align-items: center;
   position: absolute;
   padding: 16px;
-  top: 0;
+  top: 1px;
   right: 0;
-  bottom: 0;
+  bottom: 1px;
   left: 0;
   background: ${({ theme }) =>
     `linear-gradient(90deg, rgba(250, 250, 250, 0) 0%, ${theme.colors.ntrl_lightest.main} 56.58%)`};
