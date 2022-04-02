@@ -19,6 +19,7 @@ import React, { memo } from 'react'
 import styled from 'styled-components/macro'
 import Utils from '../../../services/Utils'
 import { DEVICE_SIZE } from '../../../theme/theme'
+import { Box } from '../../atoms/box/Box'
 import { ButtonIcon } from '../../atoms/buttonIcon/ButtonIcon'
 import { ClipboardInput } from '../../atoms/clipboardInput/ClipboardInput'
 import { FilePreview } from '../../atoms/filePreview/FilePreview'
@@ -26,7 +27,7 @@ import { Icon } from '../../atoms/icon/Icon'
 import Text from '../../atoms/text/Text'
 
 const Container = styled.div`
-  padding: 16px;
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -36,23 +37,27 @@ const Container = styled.div`
 
   @media (max-width: ${DEVICE_SIZE.TABLET}) {
     max-width: 100%;
+    border: none;
   }
 `
 
 const Header = styled.div`
   display: flex;
+  padding: 0 16px;
 
   @media (max-width: ${DEVICE_SIZE.TABLET}) {
     justify-content: flex-end;
   }
 `
 
-const Content = styled.div`
+const Content = styled(Box)`
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   overflow: auto;
+  padding: 0 40px;
+
+  @media (max-width: ${DEVICE_SIZE.TABLET}) {
+    padding: 0 24px;
+  }
 `
 
 const Filename = styled(Text)`
@@ -76,7 +81,7 @@ export const FileDetails = memo(({ from, file, when, link, onClose, ...props }) 
         <ButtonIcon variant="transparent" icon={<Icon name="close" />} onClick={onClose} />
       </Header>
 
-      <Content>
+      <Content direction="column" hAlign="center">
         <FilePreview file={file} />
 
         <Filename align="center" size="m" weight="500" variant="black">
