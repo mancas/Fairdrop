@@ -13,6 +13,7 @@ export * from './atoms/table/Table'
 export * from './atoms/text/Text'
 export * from './atoms/switchFileIcon/SwitchFileIcon'
 export * from './atoms/box/Box'
+export * from './atoms/buttonFlat/ButtonFlat'
 
 // molecules
 export * from './molecules/header/Header'
