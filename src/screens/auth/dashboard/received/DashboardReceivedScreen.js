@@ -18,13 +18,18 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Text from '../../../../components/atoms/text/Text'
 import { useMailbox } from '../../../../hooks/mailbox/useMailbox'
 import Utils from '../../../../services/Utils'
-import styles from './DashboardReceivedScreen.module.css'
 import { DateTime } from 'luxon'
-import Download from '../components/download/Download'
 import { toast } from 'react-toastify'
 import WorkingLayout from '../../../../components/layout/working/WorkingLayout'
 import Notification from '../../../../components/molecules/notification/Notification'
-import { Table, TableBody, TableCell, TableHead, TableRow } from '../../../../components'
+import styled from 'styled-components/macro'
+import { Table, TableBody, TableCell, TableHead, TableRow, SwitchFileIcon, Box } from '../../../../components'
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`
 
 const honestInboxRegex = /anonymous-\d{13}/gm
 
@@ -62,8 +67,8 @@ const DashboardReceivedScreen = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
+    <Container>
+      <div>
         <Table>
           <TableHead>
             <TableRow>
@@ -103,28 +108,28 @@ const DashboardReceivedScreen = () => {
                 return (
                   <TableRow key={message?.hash?.address}>
                     <TableCell>
-                      <div className={styles.row}>
-                        <Download className={styles.icon} message={message} />
+                      <Box gap="14px" vAlign="center">
+                        <SwitchFileIcon className type={file.type} />
                         <Text size="sm" variant="black">
                           {file?.name ?? 'Unkown'}
                         </Text>
-                      </div>
+                      </Box>
                     </TableCell>
 
                     <TableCell>
-                      <div className={styles.row}>
+                      <Box gap="14px" vAlign="center">
                         <Text size="sm" variant="black">
                           {sanitizedFrom ?? 'Unkown'}
                         </Text>
-                      </div>
+                      </Box>
                     </TableCell>
 
                     <TableCell>
-                      <div className={styles.row}>
+                      <Box gap="14px" vAlign="center">
                         <Text size="sm" variant="black">
                           {hash.time ? DateTime.fromMillis(hash.time).toFormat('dd/LL/yyyy HH:mm') : 'Unkown'}
                         </Text>
-                      </div>
+                      </Box>
                     </TableCell>
 
                     <TableCell>
@@ -139,11 +144,11 @@ const DashboardReceivedScreen = () => {
           )}
         </Table>
         {received.length === 0 && (
-          <div className={styles.row}>
+          <Box gap="14px" vAlign="center">
             <Text size="sm" variant="black">
               There is no received files yet...
             </Text>
-          </div>
+          </Box>
         )}
       </div>
 
@@ -159,7 +164,7 @@ const DashboardReceivedScreen = () => {
           </Text>
         </div>
       </Notification>
-    </div>
+    </Container>
   )
 }
 

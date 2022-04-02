@@ -11,6 +11,8 @@ export * from './atoms/nav/Nav'
 export * from './atoms/navItem/NavItem'
 export * from './atoms/table/Table'
 export * from './atoms/text/Text'
+export * from './atoms/switchFileIcon/SwitchFileIcon'
+export * from './atoms/box/Box'
 
 // molecules
 export * from './molecules/header/Header'
