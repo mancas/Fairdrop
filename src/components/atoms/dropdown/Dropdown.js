@@ -27,6 +27,8 @@ const DropdownButton = styled.button`
 `
 
 const DropdownOptions = styled.ul`
+  position: absolute;
+  top: 30px;
   width: 200px;
   border-radius: 4px;
   box-sizing: border-box;
@@ -36,6 +38,7 @@ const DropdownOptions = styled.ul`
   ${({ theme, expanded }) => css`
     border: solid 1px ${theme.colors.ntrl_light.main};
     display: ${expanded ? 'block' : 'none'};
+    background: ${theme.colors.white.main};
   `};
 `
 

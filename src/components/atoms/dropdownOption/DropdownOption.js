@@ -38,5 +38,6 @@ export const DropdownOption = memo(styled.li.attrs(() => ({
 
   ${({ theme }) => css`
     border-bottom: solid 1px ${theme.colors.ntrl_light.main};
+    background: ${theme.colors.white.main};
   `};
 `)
