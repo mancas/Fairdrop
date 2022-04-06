@@ -24,7 +24,7 @@ import styled from 'styled-components/macro'
 import { Box } from '../../../../components'
 import { TableReceive } from './TableReceived'
 import { ListReceived } from './ListReceived'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMediaQuery } from '../../../../hooks/useMediaQuery/useMediaQuery'
 import { DEVICE_SIZE } from '../../../../theme/theme'
 
 const Container = styled.div`
