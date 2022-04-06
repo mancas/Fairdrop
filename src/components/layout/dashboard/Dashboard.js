@@ -23,11 +23,12 @@ import DashboardConsentsScreen from '../../../screens/auth/dashboard/consents/Da
 import DashboardReceivedScreen from '../../../screens/auth/dashboard/received/DashboardReceivedScreen'
 import DashboardSentScreen from '../../../screens/auth/dashboard/sent/DashboardSentScreen'
 import DashboardStoredScreen from '../../../screens/auth/dashboard/stored/DashboardStoredScreen'
-import styles from './Dashboard.module.css'
 import ReactTooltip from 'react-tooltip'
 import { Sidebar } from '../../'
 import { useMailbox } from '../../../hooks/mailbox/useMailbox'
 import { generatePath } from 'react-router-dom'
+
+import { Container, Content, Tooltip } from './Components'
 
 const Dashboard = () => {
   const { setVariant, setBackground } = useTheme()
@@ -39,7 +40,7 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div className={styles.container}>
+    <Container>
       <Sidebar
         items={[
           {
@@ -57,15 +58,17 @@ const Dashboard = () => {
         ]}
       />
 
-      <div className={styles.content}>
+      <Content>
         <Route exact path={routes.mailbox.received} component={DashboardReceivedScreen} />
         <Route exact path={routes.mailbox.sent} component={DashboardSentScreen} />
         <Route exact path={routes.mailbox.stored} component={DashboardStoredScreen} />
         <Route exact path={routes.mailbox.consents} component={DashboardConsentsScreen} />
-      </div>
+      </Content>
 
-      <ReactTooltip className={styles.tooltip} />
-    </div>
+      <Tooltip>
+        <ReactTooltip />
+      </Tooltip>
+    </Container>
   )
 }
 
