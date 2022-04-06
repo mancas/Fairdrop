@@ -25,7 +25,6 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react'
-import { Transition } from 'react-transition-group'
 import { CSSTransition } from 'react-transition-group'
 import { SwitchTransition } from 'react-transition-group'
 import styled from 'styled-components/macro'
