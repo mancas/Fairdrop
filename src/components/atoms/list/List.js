@@ -15,6 +15,6 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import { memo } from 'react'
-import styled, { css } from 'styled-components/macro'
+import styled from 'styled-components/macro'
 
 export const List = memo(styled.ul``)
