@@ -15,7 +15,7 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import { DEVICE_SIZE } from '../../../../theme/theme'
 import { FileDetails } from '../../../../components'
 
@@ -32,7 +32,34 @@ const WrapperDetails = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background: white;
+  transform: translateX(100%);
+
+  &.wrapper-details-enter {
+    transform: translateX(100%);
+  }
+
+  &.wrapper-details-enter-active {
+    transform: translateX(0%);
+    transition: transform ${enterTimeout}ms ease-in;
+  }
+
+  &.wrapper-details-enter-done {
+    transform: translateX(0%);
+  }
+
+  &.wrapper-details-exit {
+    transform: translateX(0%);
+  }
+
+  &.wrapper-details-exit-active {
+    transform: translateX(100%);
+    transition: transform ${exitTimeout}ms ease-out;
+  }
+
+  &.wrapper-details-exit-done {
+    transform: translateX(100%);
+  }
+
   @media (min-width: ${DEVICE_SIZE.TABLET}) {
     position: static;
     top: unset;
@@ -45,28 +72,34 @@ const WrapperDetails = styled.div`
     }
 
     &.wrapper-details-enter {
+      transform: unset;
       width: ${exitWidth};
     }
 
     &.wrapper-details-enter-active {
+      transform: unset;
       width: ${enterWidth};
       transition: width ${enterTimeout}ms ease-in;
     }
 
     &.wrapper-details-enter-done {
+      transform: unset;
       width: ${enterWidth};
     }
 
     &.wrapper-details-exit {
+      transform: unset;
       width: ${enterWidth};
     }
 
     &.wrapper-details-exit-active {
+      transform: unset;
       width: ${exitWidth};
       transition: width ${exitTimeout}ms ease-out;
     }
 
     &.wrapper-details-exit-done {
+      transform: unset;
       width: ${exitWidth};
     }
   }
