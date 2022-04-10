@@ -106,7 +106,7 @@ const WrapperDetails = styled.div`
 `
 
 export const FileDetailsReceived = ({ show: givenShow, fileDetails, onExited }) => {
-  const [{ show }, setState] = useState({ show: false, blockUI: false })
+  const [{ show }, setState] = useState({ show: false })
 
   const handleExited = () => onExited?.()
 
