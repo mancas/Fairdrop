@@ -15,7 +15,6 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { CSSTransition } from 'react-transition-group'
 import Text from '../../../../components/atoms/text/Text'
 import { useMailbox } from '../../../../hooks/mailbox/useMailbox'
 import { toast } from 'react-toastify'
@@ -27,7 +26,7 @@ import { TableReceive } from './TableReceived'
 import { ListReceived } from './ListReceived'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery/useMediaQuery'
 import { DEVICE_SIZE } from '../../../../theme/theme'
-import { FileDetails } from '../../../../components'
+import { FileDetailsReceived } from './FileDetailsReceived'
 
 const Container = styled.div`
   position: relative;
@@ -42,61 +41,6 @@ const WrapperTable = styled.div`
   padding: 24px 40px 24px 24px;
 `
 
-const enterTimeout = 500
-const exitTimeout = 250
-const enterWidth = '320px'
-const exitWidth = '0'
-
-const FileDetailsStyled = styled(FileDetails)``
-
-console.log('paco', FileDetailsStyled.toString())
-
-const WrapperDetails = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: white;
-  @media (min-width: ${DEVICE_SIZE.TABLET}) {
-    position: static;
-    top: unset;
-    right: unset;
-    bottom: unset;
-    left: unset;
-
-    ${FileDetailsStyled} {
-      width: ${enterWidth};
-    }
-
-    &.wrapper-details-enter {
-      width: ${exitWidth};
-    }
-
-    &.wrapper-details-enter-active {
-      width: ${enterWidth};
-      transition: width ${enterTimeout}ms ease-in;
-    }
-
-    &.wrapper-details-enter-done {
-      width: ${enterWidth};
-    }
-
-    &.wrapper-details-exit {
-      width: ${enterWidth};
-    }
-
-    &.wrapper-details-exit-active {
-      width: ${exitWidth};
-      transition: width ${exitTimeout}ms ease-out;
-    }
-
-    &.wrapper-details-exit-done {
-      width: ${exitWidth};
-    }
-  }
-`
-
 const honestInboxRegex = /anonymous-\d{13}/gm
 
 const DashboardReceivedScreen = () => {
@@ -105,10 +49,7 @@ const DashboardReceivedScreen = () => {
   const [shouldOpenNotification, setShouldOpenNotification] = useState(
     !localStorage.getItem('honestInboxDidYouKnowNotification'),
   )
-  const [fileDetails, setFileDetails] = useState({
-    opened: false,
-    data: null,
-  })
+  const [fileDetails, setFileDetails] = useState(null)
   const minTabletMediaQuery = useMediaQuery(`(min-width: ${DEVICE_SIZE.TABLET})`)
 
   const sortedMessages = useMemo(() => {
@@ -123,24 +64,11 @@ const DashboardReceivedScreen = () => {
   }, [])
 
   const handleClickFile = (data) => {
-    setFileDetails({
-      opened: true,
-      data,
-    })
-  }
-
-  const handleCloseFile = () => {
-    setFileDetails((old) => ({
-      ...old,
-      opened: false,
-    }))
+    setFileDetails(data)
   }
 
   const handleExitedFile = () => {
-    setFileDetails((old) => ({
-      ...old,
-      data: null,
-    }))
+    setFileDetails(null)
   }
 
   useEffect(() => {
@@ -185,34 +113,8 @@ const DashboardReceivedScreen = () => {
           </>
         )}
       </WrapperTable>
-      <CSSTransition
-        in={fileDetails.opened}
-        timeout={{
-          enter: enterTimeout,
-          exit: exitTimeout,
-        }}
-        classNames={{
-          enter: 'wrapper-details-enter',
-          enterActive: 'wrapper-details-enter-active',
-          enterDone: 'wrapper-details-enter-done',
-          exit: 'wrapper-details-exit',
-          exitActive: 'wrapper-details-exit-active',
-          exitDone: 'wrapper-details-exit-done',
-        }}
-        onExited={handleExitedFile}
-      >
-        <WrapperDetails>
-          {fileDetails.data && (
-            <FileDetailsStyled
-              from={fileDetails.data.from}
-              file={fileDetails.data.file}
-              when={fileDetails.data.time}
-              link="wwww.fakelink.org"
-              onClose={handleCloseFile}
-            />
-          )}
-        </WrapperDetails>
-      </CSSTransition>
+
+      <FileDetailsReceived show={!!fileDetails} fileDetails={fileDetails} onExited={handleExitedFile} />
 
       <Notification opened={shouldOpenNotification} onCloseRequest={onCloseNotification}>
         <div>
