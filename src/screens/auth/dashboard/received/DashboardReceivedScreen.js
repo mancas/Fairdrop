@@ -26,11 +26,36 @@ import { TableReceive } from './TableReceived'
 import { ListReceived } from './ListReceived'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery/useMediaQuery'
 import { DEVICE_SIZE } from '../../../../theme/theme'
+import { FileDetails } from '../../../../components'
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  display: flex;
+`
+
+const WrapperTable = styled.div`
+  flex: 1;
+  padding: 24px 40px 24px 24px;
+`
+
+const WrapperDetails = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: white;
+  @media (min-width: ${DEVICE_SIZE.TABLET}) {
+    position: static;
+    top: unset;
+    right: unset;
+    bottom: unset;
+    left: unset;
+    width: 322px;
+  }
 `
 
 const honestInboxRegex = /anonymous-\d{13}/gm
@@ -41,6 +66,7 @@ const DashboardReceivedScreen = () => {
   const [shouldOpenNotification, setShouldOpenNotification] = useState(
     !localStorage.getItem('honestInboxDidYouKnowNotification'),
   )
+  const [fileDetails, setFileDetails] = useState(null)
   const minTabletMediaQuery = useMediaQuery(`(min-width: ${DEVICE_SIZE.TABLET})`)
 
   const sortedMessages = useMemo(() => {
@@ -53,6 +79,14 @@ const DashboardReceivedScreen = () => {
     localStorage.setItem('honestInboxDidYouKnowNotification', Date.now())
     setShouldOpenNotification(false)
   }, [])
+
+  const handleClickFile = (details) => {
+    setFileDetails(details)
+  }
+
+  const handleCloseFile = () => {
+    setFileDetails(null)
+  }
 
   useEffect(() => {
     getReceivedMessages()
@@ -71,7 +105,7 @@ const DashboardReceivedScreen = () => {
 
   return (
     <Container>
-      <div>
+      <WrapperTable>
         {received.length === 0 ? (
           <Box gap="14px" vAlign="center">
             <Text size="sm" variant="black">
@@ -81,13 +115,33 @@ const DashboardReceivedScreen = () => {
         ) : (
           <>
             {minTabletMediaQuery ? (
-              <TableReceive sortedMessages={sortedMessages} honestInboxRegex={honestInboxRegex} />
+              <TableReceive
+                sortedMessages={sortedMessages}
+                honestInboxRegex={honestInboxRegex}
+                onClick={handleClickFile}
+              />
             ) : (
-              <ListReceived sortedMessages={sortedMessages} honestInboxRegex={honestInboxRegex} />
+              <ListReceived
+                sortedMessages={sortedMessages}
+                honestInboxRegex={honestInboxRegex}
+                onClick={handleClickFile}
+              />
             )}
           </>
         )}
-      </div>
+      </WrapperTable>
+
+      {fileDetails && (
+        <WrapperDetails>
+          <FileDetails
+            from={fileDetails.from}
+            file={fileDetails.file}
+            when={fileDetails.time}
+            link="wwww.fakelink.org"
+            onClose={handleCloseFile}
+          />
+        </WrapperDetails>
+      )}
 
       <Notification opened={shouldOpenNotification} onCloseRequest={onCloseNotification}>
         <div>
