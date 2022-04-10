@@ -15,6 +15,7 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import Text from '../../../../components/atoms/text/Text'
 import { useMailbox } from '../../../../hooks/mailbox/useMailbox'
 import { toast } from 'react-toastify'
@@ -41,6 +42,15 @@ const WrapperTable = styled.div`
   padding: 24px 40px 24px 24px;
 `
 
+const enterTimeout = 500
+const exitTimeout = 250
+const enterWidth = '320px'
+const exitWidth = '0'
+
+const FileDetailsStyled = styled(FileDetails)``
+
+console.log('paco', FileDetailsStyled.toString())
+
 const WrapperDetails = styled.div`
   position: absolute;
   top: 0;
@@ -54,7 +64,36 @@ const WrapperDetails = styled.div`
     right: unset;
     bottom: unset;
     left: unset;
-    width: 322px;
+
+    ${FileDetailsStyled} {
+      width: ${enterWidth};
+    }
+
+    &.wrapper-details-enter {
+      width: ${exitWidth};
+    }
+
+    &.wrapper-details-enter-active {
+      width: ${enterWidth};
+      transition: width ${enterTimeout}ms ease-in;
+    }
+
+    &.wrapper-details-enter-done {
+      width: ${enterWidth};
+    }
+
+    &.wrapper-details-exit {
+      width: ${enterWidth};
+    }
+
+    &.wrapper-details-exit-active {
+      width: ${exitWidth};
+      transition: width ${exitTimeout}ms ease-out;
+    }
+
+    &.wrapper-details-exit-done {
+      width: ${exitWidth};
+    }
   }
 `
 
@@ -66,7 +105,10 @@ const DashboardReceivedScreen = () => {
   const [shouldOpenNotification, setShouldOpenNotification] = useState(
     !localStorage.getItem('honestInboxDidYouKnowNotification'),
   )
-  const [fileDetails, setFileDetails] = useState(null)
+  const [fileDetails, setFileDetails] = useState({
+    opened: false,
+    data: null,
+  })
   const minTabletMediaQuery = useMediaQuery(`(min-width: ${DEVICE_SIZE.TABLET})`)
 
   const sortedMessages = useMemo(() => {
@@ -80,12 +122,25 @@ const DashboardReceivedScreen = () => {
     setShouldOpenNotification(false)
   }, [])
 
-  const handleClickFile = (details) => {
-    setFileDetails(details)
+  const handleClickFile = (data) => {
+    setFileDetails({
+      opened: true,
+      data,
+    })
   }
 
   const handleCloseFile = () => {
-    setFileDetails(null)
+    setFileDetails((old) => ({
+      ...old,
+      opened: false,
+    }))
+  }
+
+  const handleExitedFile = () => {
+    setFileDetails((old) => ({
+      ...old,
+      data: null,
+    }))
   }
 
   useEffect(() => {
@@ -130,18 +185,34 @@ const DashboardReceivedScreen = () => {
           </>
         )}
       </WrapperTable>
-
-      {fileDetails && (
+      <CSSTransition
+        in={fileDetails.opened}
+        timeout={{
+          enter: enterTimeout,
+          exit: exitTimeout,
+        }}
+        classNames={{
+          enter: 'wrapper-details-enter',
+          enterActive: 'wrapper-details-enter-active',
+          enterDone: 'wrapper-details-enter-done',
+          exit: 'wrapper-details-exit',
+          exitActive: 'wrapper-details-exit-active',
+          exitDone: 'wrapper-details-exit-done',
+        }}
+        onExited={handleExitedFile}
+      >
         <WrapperDetails>
-          <FileDetails
-            from={fileDetails.from}
-            file={fileDetails.file}
-            when={fileDetails.time}
-            link="wwww.fakelink.org"
-            onClose={handleCloseFile}
-          />
+          {fileDetails.data && (
+            <FileDetailsStyled
+              from={fileDetails.data.from}
+              file={fileDetails.data.file}
+              when={fileDetails.data.time}
+              link="wwww.fakelink.org"
+              onClose={handleCloseFile}
+            />
+          )}
         </WrapperDetails>
-      )}
+      </CSSTransition>
 
       <Notification opened={shouldOpenNotification} onCloseRequest={onCloseNotification}>
         <div>
