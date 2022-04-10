@@ -1,18 +1,15 @@
 import React from 'react'
-import { MetamaskButton } from './MetamaskButton'
+import { Label } from './Label'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Example/MetamaskButton',
-  component: MetamaskButton,
+  title: 'Example/Label',
+  component: Label,
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template = (args) => <MetamaskButton {...args} />
+const Template = (args) => <Label {...args} />
 
 export const Sample = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Sample.args = {
-  disabled: false,
-  onAccountsReady: ({ accounts }) => console.info(accounts),
-}
+Sample.args = {}
