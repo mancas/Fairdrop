@@ -96,6 +96,7 @@ const Options = styled.ul`
   padding: 0;
   max-height: 150px;
   overflow: auto;
+  z-index: 1000;
 
   ${({ theme, expanded }) => css`
     border: solid 1px ${theme?.colors?.[VARIANT.BLACK]?.main};
@@ -140,7 +141,7 @@ export const Select = memo(
 
     const handleClickOption = (option) => {
       setState((old) => ({ ...old, expanded: !expanded }))
-      onChange?.(option.value)
+      onChange?.(option)
     }
 
     const value = useMemo(() => {

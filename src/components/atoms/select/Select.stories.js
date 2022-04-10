@@ -47,9 +47,9 @@ export default {
 const Template = ({ onChange, ...args }) => {
   const [selectedOption, setSelectedOption] = useState()
 
-  const handleChange = (value) => {
-    setSelectedOption(value)
-    onChange?.(value)
+  const handleChange = (option) => {
+    setSelectedOption(option.value)
+    onChange?.(option)
   }
 
   return <Select selectedOption={selectedOption} onChange={handleChange} {...args} />

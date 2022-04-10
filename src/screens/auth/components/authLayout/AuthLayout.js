@@ -23,6 +23,7 @@ import bg from './assets/background.jpg'
 const Container = styled.section`
   display: flex;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.white.main};
 `
 
 const LeftSide = styled(Box)`

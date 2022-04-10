@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Text from '../../../components/atoms/text/Text'
 import { routes } from '../../../config/routes'
 import { useFormik } from 'formik'
@@ -22,7 +22,7 @@ import { schema } from './schema'
 import { useMailbox } from '../../../hooks/mailbox/useMailbox'
 import { toast } from 'react-toastify'
 import { AuthLayout } from '../components/authLayout/AuthLayout'
-import { Logo, Box, MetamaskButton, ImportButton, Input, Button } from '../../../components'
+import { Logo, Box, MetamaskButton, ImportButton, Input, Button, Select } from '../../../components'
 import { Link as RNLink } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
@@ -87,7 +87,7 @@ const SubmitButton = styled(Button)`
 `
 
 const LoginScreen = ({ history, location }) => {
-  const [, { unlockMailbox }] = useMailbox()
+  const [{ accounts }, { unlockMailbox }] = useMailbox()
   const formik = useFormik({
     initialValues: {
       mailbox: '',
@@ -109,21 +109,19 @@ const LoginScreen = ({ history, location }) => {
     },
   })
 
-  // const options = useMemo(() => {
-  //   const options = accounts.map((subdomain) => {
-  //     return { label: subdomain, value: subdomain }
-  //   })
+  const options = useMemo(() => {
+    return accounts.map((subdomain) => {
+      return { label: subdomain, value: subdomain }
+    })
+  }, [accounts])
 
-  //   return options
-  // }, [accounts])
-
-  // const handleMailboxChange = useCallback(
-  //   ({ value }) => {
-  //     formik.setFieldTouched('mailbox', true)
-  //     formik.setFieldValue('mailbox', value)
-  //   },
-  //   [formik, handleAddMailbox],
-  // )
+  const handleMailboxChange = useCallback(
+    ({ value }) => {
+      formik.setFieldTouched('mailbox', true)
+      formik.setFieldValue('mailbox', value)
+    },
+    [formik],
+  )
 
   return (
     <AuthLayout>
@@ -154,13 +152,13 @@ const LoginScreen = ({ history, location }) => {
           </Separator>
 
           <Form onSubmit={formik.handleSubmit}>
-            <Input
+            <Select
               name="mailbox"
               value={formik.values.mailbox}
               label="Mailbox"
-              placeholder="Type or select your mailbox's name"
-              type="text"
-              onChange={formik.handleChange}
+              placeholder="Select your mailbox's name"
+              options={options}
+              onChange={handleMailboxChange}
               onBlur={formik.handleBlur}
               hasError={formik.touched?.mailbox && formik.errors?.mailbox}
               errorMessage={formik.errors?.mailbox}
