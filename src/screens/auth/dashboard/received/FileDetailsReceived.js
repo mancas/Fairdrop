@@ -21,6 +21,7 @@ import { FileDetails } from '../../../../components'
 
 const enterTimeout = 500
 const exitTimeout = 250
+// this value is for desktop
 const enterWidth = '320px'
 const exitWidth = '0'
 
