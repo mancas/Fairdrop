@@ -29,11 +29,16 @@ const CollapsibleWrapper = styled.div`
   `};
 `
 
-export const Collapsible = function Collapsible({ children, expanded, onClick }) {
+export const Collapsible = function Collapsible({ className, children, expanded, onClick }) {
   const contentRef = useRef()
 
   return (
-    <CollapsibleWrapper aria-expanded={expanded} expanded={expanded} $height={contentRef?.current?.offsetHeight ?? 0}>
+    <CollapsibleWrapper
+      className={className}
+      aria-expanded={expanded}
+      expanded={expanded}
+      $height={contentRef?.current?.offsetHeight ?? 0}
+    >
       {/* 
           With flex the margin is added to element height
           calculated here: contentRef.current.offsetHeight.

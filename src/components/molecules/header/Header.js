@@ -56,6 +56,7 @@ const HeaderNavDropdown = styled(Collapsible)`
   top: 49px;
   width: 100%;
   overflow: hidden;
+  z-index: 1;
 `
 
 const HeaderNavDropdownContent = styled.div`

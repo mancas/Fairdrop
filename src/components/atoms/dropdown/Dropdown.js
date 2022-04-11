@@ -27,9 +27,13 @@ const DropdownButton = styled.button`
   cursor: pointer;
 `
 
+const CollapsibleStyled = styled(Collapsible)`
+  position: absolute;
+  top: 40px;
+`
+
 const Options = styled.ul`
   width: 200px;
-  margin-top: 12px;
   padding: 8px 0;
   border-radius: 4px;
   box-sizing: border-box;
@@ -63,9 +67,9 @@ export const Dropdown = memo(function Dropdown({ id, children, expanded: givenEx
       <DropdownButton onClick={handleClick} aria-haspopup="listbox" aria-labelledby={id}>
         <Icon name="options" />
       </DropdownButton>
-      <Collapsible id={id} aria-expanded={expanded} expanded={expanded} onClick={handleClickOption}>
+      <CollapsibleStyled id={id} aria-expanded={expanded} expanded={expanded} onClick={handleClickOption}>
         <Options role="listbox">{children}</Options>
-      </Collapsible>
+      </CollapsibleStyled>
     </Box>
   )
 })
