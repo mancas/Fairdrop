@@ -17,7 +17,7 @@ const Template = (args) => {
   return (
     <div>
       <Button onClick={handleShow}>{show ? 'Hidde' : 'Show'}</Button>
-      <Collapsible show={show}>{args.children}</Collapsible>
+      <Collapsible expanded={show}>{args.children}</Collapsible>
     </div>
   )
 }

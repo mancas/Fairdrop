@@ -22,24 +22,24 @@ const CollapsibleWrapper = styled.div`
   overflow: hidden;
   transition: max-height 200ms;
 
-  ${({ show, $height }) => css`
-    max-height: ${show ? `${$height}px` : 0};
+  ${({ expanded, $height }) => css`
+    max-height: ${expanded ? `${$height}px` : 0};
     background: ${({ theme }) => theme.colors.white.main};
-    transition: max-height ${show ? '200ms' : '100ms'};
+    transition: max-height ${expanded ? '200ms' : '100ms'};
   `};
 `
 
-export const Collapsible = function Collapsible({ children, show }) {
+export const Collapsible = function Collapsible({ children, expanded, onClick }) {
   const contentRef = useRef()
 
   return (
-    <CollapsibleWrapper aria-expanded={show} show={show} $height={contentRef?.current?.offsetHeight ?? 0}>
+    <CollapsibleWrapper aria-expanded={expanded} expanded={expanded} $height={contentRef?.current?.offsetHeight ?? 0}>
       {/* 
           With flex the margin is added to element height
           calculated here: contentRef.current.offsetHeight.
           Using inline styles because work faster than SC
       */}
-      <div style={{ display: 'flex', flexDirection: 'column' }} ref={contentRef}>
+      <div style={{ display: 'flex', flexDirection: 'column' }} ref={contentRef} onClick={onClick}>
         {children}
       </div>
     </CollapsibleWrapper>

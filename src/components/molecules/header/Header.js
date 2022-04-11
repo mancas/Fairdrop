@@ -144,7 +144,7 @@ const Header = ({ className }) => {
       </HeaderWrapper>
 
       {!minTabletMediaQuery && (
-        <HeaderNavDropdown show={showNav}>
+        <HeaderNavDropdown expanded={showNav}>
           <HeaderNavDropdownContent>
             <HeaderNav />
           </HeaderNavDropdownContent>
