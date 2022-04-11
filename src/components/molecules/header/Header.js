@@ -63,7 +63,7 @@ const HeaderNavDropdownContent = styled.div`
 `
 
 const LogoWrapper = styled.button`
-  //rests
+  // resets
   border: 0;
   background: transparent;
   outline: 0;

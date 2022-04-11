@@ -37,7 +37,7 @@ export const Collapsible = function Collapsible({ children, expanded, onClick })
       {/* 
           With flex the margin is added to element height
           calculated here: contentRef.current.offsetHeight.
-          Using inline styles because work faster than SC
+          Using inline styles because it works faster than SC
       */}
       <div style={{ display: 'flex', flexDirection: 'column' }} ref={contentRef} onClick={onClick}>
         {children}
