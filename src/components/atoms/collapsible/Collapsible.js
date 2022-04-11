@@ -33,7 +33,7 @@ export const Collapsible = function Collapsible({ children, show }) {
   const contentRef = useRef()
 
   return (
-    <CollapsibleWrapper show={show} $height={contentRef?.current?.offsetHeight ?? 0}>
+    <CollapsibleWrapper aria-expanded={show} show={show} $height={contentRef?.current?.offsetHeight ?? 0}>
       {/* 
           With flex the margin is added to element height
           calculated here: contentRef.current.offsetHeight.

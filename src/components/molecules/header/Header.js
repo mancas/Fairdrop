@@ -23,7 +23,7 @@ import { routes } from '../../../config/routes'
 import { useMailbox } from '../../../hooks/mailbox/useMailbox'
 import ProfileScreen from '../../../screens/auth/profile/ProfileScreen'
 import { useSideMenu } from '../../../hooks/sideMenu/useSideMenu'
-import { Nav, NavItem, Avatar, Icon } from '../../'
+import { Nav, NavItem, Avatar, Icon, Collapsible } from '../../'
 import { useMediaQuery } from '../../../hooks/useMediaQuery/useMediaQuery'
 import { DEVICE_SIZE } from '../../../theme/theme'
 
@@ -51,27 +51,23 @@ const HeaderNavWrapper = styled.div`
   gap: 24px;
 `
 
-const HeaderNavDropdown = styled.div`
+const HeaderNavDropdown = styled(Collapsible)`
   position: absolute;
   top: 49px;
   width: 100%;
-
-  box-sizing: border-box;
   overflow: hidden;
-
-  transition: max-height 1s;
-
-  ${({ show }) => css`
-    max-height: ${show ? '500px' : 0};
-    background: ${({ theme }) => theme.colors.white.main};
-  `}
 `
 
 const HeaderNavDropdownContent = styled.div`
   padding: 20px;
 `
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.button`
+  //rests
+  border: 0;
+  background: transparent;
+  outline: 0;
+
   display: flex;
   align-items: center;
   gap: 10px;
@@ -136,8 +132,8 @@ const Header = ({ className }) => {
   return (
     <>
       <HeaderWrapper className={className}>
-        <LogoWrapper>
-          <Logo onClick={handleShowNavigation} />
+        <LogoWrapper onClick={handleShowNavigation}>
+          <Logo />
           {!minTabletMediaQuery && <IconLogo name="arrowUp" size="s" show={showNav} />}
         </LogoWrapper>
 
