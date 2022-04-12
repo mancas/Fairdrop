@@ -127,7 +127,6 @@ const Header = ({ className }) => {
           <NavItemSized
             active={Object.values(routes.mailbox).some((path) => location.pathname === path)}
             to={routes.mailbox.received}
-            href={routes.mailbox.received}
           >
             My files
           </NavItemSized>

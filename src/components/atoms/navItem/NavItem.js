@@ -15,6 +15,7 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
 
 export const NavItemLi = styled.li`
@@ -22,7 +23,7 @@ export const NavItemLi = styled.li`
   list-style: none;
 `
 
-export const NavItemText = styled.a`
+export const NavItemContent = styled.span`
   position: relative;
   display: inline-block;
   width: 100%;
@@ -46,13 +47,10 @@ export const NavItemText = styled.a`
   `};
 `
 
-export const NavItem = memo(function NavItem({ children, to, href, onClick, size, active, ...rest }) {
+export const NavItem = memo(function NavItem({ children, to, onClick, size, active, ...rest }) {
   const setHandleClick = () => {
-    if (onClick || (href && to)) {
+    if (onClick) {
       return (e) => {
-        if (href && to) {
-          e.preventDefault()
-        }
         onClick?.(e)
       }
     }
@@ -61,7 +59,7 @@ export const NavItem = memo(function NavItem({ children, to, href, onClick, size
 
   const shitchElement = () => {
     if (to) {
-      return 'a'
+      return Link
     }
 
     if (onClick) {
@@ -73,9 +71,9 @@ export const NavItem = memo(function NavItem({ children, to, href, onClick, size
 
   return (
     <NavItemLi {...rest}>
-      <NavItemText as={shitchElement()} data-to={to} href={href} onClick={setHandleClick()} size={size} active={active}>
+      <NavItemContent as={shitchElement()} to={to} size={size} active={active} onClick={setHandleClick()}>
         {children}
-      </NavItemText>
+      </NavItemContent>
     </NavItemLi>
   )
 })
