@@ -14,21 +14,68 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import { memo } from 'react'
+import React, { memo } from 'react'
 import styled, { css } from 'styled-components/macro'
 
-export const NavItem = memo(styled.li`
+export const NavItemLi = styled.li`
+  position: relative;
   list-style: none;
+`
+
+export const NavItemText = styled.a`
+  position: relative;
+  display: inline-block;
+  width: 100%;
   font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
+  box-sizing: border-box;
   cursor: pointer;
 
   ${({ theme, active, size = 'm' }) => css`
     color: ${theme.colors.black.main};
     text-decoration-line: ${active ? 'underline' : 'none'};
+
+    &:hover {
+      text-decoration-line: ${active ? 'underline' : 'none'};
+    }
+
     ${css(theme.components.navItem.sizes[size])};
   `};
-`)
+`
+
+export const NavItem = memo(function NavItem({ children, to, href, onClick, size, active, ...rest }) {
+  const setHandleClick = () => {
+    if (onClick || (href && to)) {
+      return (e) => {
+        if (href && to) {
+          e.preventDefault()
+        }
+        onClick?.(e)
+      }
+    }
+    return undefined
+  }
+
+  const shitchElement = () => {
+    if (to) {
+      return 'a'
+    }
+
+    if (onClick) {
+      return 'button'
+    }
+
+    return 'span'
+  }
+
+  return (
+    <NavItemLi {...rest}>
+      <NavItemText as={shitchElement()} data-to={to} href={href} onClick={setHandleClick()} size={size} active={active}>
+        {children}
+      </NavItemText>
+    </NavItemLi>
+  )
+})
