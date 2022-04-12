@@ -25,7 +25,6 @@ import { useSideMenu } from '../../../hooks/sideMenu/useSideMenu'
 import { Nav, NavItem, Avatar, Icon, Collapsible } from '../../'
 import { useMediaQuery } from '../../../hooks/useMediaQuery/useMediaQuery'
 import { DEVICE_SIZE } from '../../../theme/theme'
-import { useHistory } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -87,13 +86,8 @@ const Header = ({ className }) => {
   const { showSideMenu } = useSideMenu()
   const [{ showNav }, setState] = useState({ showNav: false })
   const location = useLocation()
-  const history = useHistory()
 
   const minTabletMediaQuery = useMediaQuery(`(min-width: ${DEVICE_SIZE.TABLET})`)
-
-  const handleClick = (e) => {
-    history.push(e.target.dataset.to)
-  }
 
   const handleProfileClick = useCallback(() => {
     showSideMenu({
@@ -115,7 +109,7 @@ const Header = ({ className }) => {
   const HeaderNav = () => (
     <>
       {!mailbox && (
-        <Nav vertical={!minTabletMediaQuery} onClick={handleClick}>
+        <Nav vertical={!minTabletMediaQuery}>
           <NavItemSized active={location.pathname === routes.login} to={routes.login}>
             Log in / Register
           </NavItemSized>
@@ -123,7 +117,7 @@ const Header = ({ className }) => {
       )}
 
       {mailbox && (
-        <Nav vertical={!minTabletMediaQuery} onClick={handleClick}>
+        <Nav vertical={!minTabletMediaQuery}>
           <NavItemSized
             active={Object.values(routes.mailbox).some((path) => location.pathname === path)}
             to={routes.mailbox.received}
