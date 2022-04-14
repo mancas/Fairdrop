@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { DEVICE_SIZE } from '../../../../theme/theme'
-import { Box, Text, ClipboardInput } from '../../../../components'
-import { TableFiles } from '../components'
+import { Box, Text, ClipboardInput, TableFiles } from '../../../../components'
 
 const Content = styled(Box)`
   position: relative;
