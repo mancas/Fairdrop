@@ -1,11 +1,15 @@
 import React from 'react'
-import { List, ListItem, getFileIcon } from '../../../../components'
+import styled from 'styled-components/macro'
+import { List, ListItem, getFileIcon } from '../..'
 import { DateTime } from 'luxon'
-import Utils from '../../../../services/Utils'
+import Utils from '../../../services/Utils'
 
-export const ListReceived = ({ sortedMessages, honestInboxRegex, onClick }) => {
+const WrapperList = styled(List)`
+  width: 100%;
+`
+export const TableMobile = ({ className, sortedMessages, honestInboxRegex, hideFrom, onClick }) => {
   return (
-    <List>
+    <WrapperList className={className}>
       {sortedMessages.map((message) => {
         const { hash = {}, from } = message
         const { file = {} } = hash
@@ -16,10 +20,10 @@ export const ListReceived = ({ sortedMessages, honestInboxRegex, onClick }) => {
         }
 
         const subtitleArr = [
-          sanitizedFrom,
+          !hideFrom ? sanitizedFrom : undefined,
           hash.time ? DateTime.fromMillis(hash.time).toFormat('dd/LL/yyyy') : 'Unkown',
           Utils.humanFileSize(file?.size) ?? 'Unkown',
-        ]
+        ].filter((item) => !!item)
 
         return (
           <ListItem
@@ -27,10 +31,10 @@ export const ListReceived = ({ sortedMessages, honestInboxRegex, onClick }) => {
             iconName={getFileIcon({ type: file.type })?.name}
             title={sanitizedFrom ?? 'Unkown'}
             subtitle={subtitleArr.join(' · ')}
-            onClick={() => onClick({ file, from, time: hash.time })}
+            onClick={() => onClick?.({ file, from, time: hash.time })}
           />
         )
       })}
-    </List>
+    </WrapperList>
   )
 }

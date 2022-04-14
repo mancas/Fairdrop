@@ -1,21 +1,11 @@
 import React from 'react'
 import { DateTime } from 'luxon'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  SwitchFileIcon,
-  Box,
-  ButtonFlat,
-  Text,
-} from '../../../../components'
-import Utils from '../../../../services/Utils'
+import { Table, TableBody, TableCell, TableHead, TableRow, SwitchFileIcon, Box, ButtonFlat, Text } from '../..'
+import Utils from '../../../services/Utils'
 
-export const TableReceive = ({ sortedMessages, honestInboxRegex, onClick }) => {
+export const TableDesktop = ({ className, sortedMessages, honestInboxRegex, hideFrom, onClick }) => {
   return (
-    <Table>
+    <Table className={className}>
       <TableHead>
         <TableRow>
           <TableCell>
@@ -23,11 +13,13 @@ export const TableReceive = ({ sortedMessages, honestInboxRegex, onClick }) => {
               Name
             </Text>
           </TableCell>
-          <TableCell>
-            <Text size="sm" weight="500" variant="black">
-              From
-            </Text>
-          </TableCell>
+          {!hideFrom && (
+            <TableCell>
+              <Text size="sm" weight="500" variant="black">
+                From
+              </Text>
+            </TableCell>
+          )}
           <TableCell>
             <Text size="sm" weight="500" variant="black">
               Time
@@ -47,7 +39,7 @@ export const TableReceive = ({ sortedMessages, honestInboxRegex, onClick }) => {
 
           const { file = {} } = hash
           let sanitizedFrom = from
-          if (new RegExp(honestInboxRegex).test(from)) {
+          if (honestInboxRegex && new RegExp(honestInboxRegex).test(from)) {
             sanitizedFrom = 'Honest Inbox'
           }
 
@@ -60,7 +52,7 @@ export const TableReceive = ({ sortedMessages, honestInboxRegex, onClick }) => {
                   <ButtonFlat variant="negative">Delete</ButtonFlat>
                 </Box>
               }
-              onClick={() => onClick({ file, from, time: hash.time })}
+              onClick={() => onClick?.({ file, from, time: hash.time })}
             >
               <TableCell>
                 <Box gap="14px" vAlign="center">
@@ -73,13 +65,15 @@ export const TableReceive = ({ sortedMessages, honestInboxRegex, onClick }) => {
                 </Box>
               </TableCell>
 
-              <TableCell>
-                <Box gap="14px" vAlign="center">
-                  <Text size="sm" variant="black" truncate>
-                    {sanitizedFrom ?? 'Unkown'}
-                  </Text>
-                </Box>
-              </TableCell>
+              {!hideFrom && (
+                <TableCell>
+                  <Box gap="14px" vAlign="center">
+                    <Text size="sm" variant="black" truncate>
+                      {sanitizedFrom ?? 'Unkown'}
+                    </Text>
+                  </Box>
+                </TableCell>
+              )}
 
               <TableCell>
                 <Box gap="14px" vAlign="center">
