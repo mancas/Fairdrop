@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { DEVICE_SIZE } from '../../../../theme/theme'
 import { Box, Text, ClipboardInput, TableFiles } from '../../../../components'
+import myHonesInbox from './myHonestInbox.svg'
 
 const Content = styled(Box)`
   position: relative;
@@ -11,11 +12,9 @@ const Content = styled(Box)`
   }
 `
 
-const Image = styled.div`
-  width: 300px;
+const Image = styled.img`
+  width: 310px;
   height: 200px;
-  min-width: 300px;
-  background: red;
 `
 
 const mockData = [
@@ -57,7 +56,7 @@ const DashboardHonestScreen = () => {
         </Box>
       ) : (
         <Content gap="48px" margin="100px 0 0" padding="0 48px" vAlign="center">
-          <Image />
+          <Image src={myHonesInbox} />
           <Box className="content-text" direction="column" gap="16px">
             <Text className="content-title" size="xl" weight="600" variant="black">
               What is My honest inbox about?
