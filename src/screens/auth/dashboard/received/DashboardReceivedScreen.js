@@ -45,10 +45,17 @@ const DashboardReceivedScreen = () => {
     !localStorage.getItem('honestInboxDidYouKnowNotification'),
   )
 
-  const sortedMessages = useMemo(() => {
-    return received.sort((a, b) => {
-      return b?.hash?.time - a?.hash?.time
-    })
+  const messagesAdapted = useMemo(() => {
+    return received
+      .sort((a, b) => {
+        return b?.hash?.time - a?.hash?.time
+      })
+      .map(({ from, ...message }) => {
+        return {
+          ...message,
+          from: new RegExp(honestInboxRegex).test(from) ? 'Honest Inbox' : from,
+        }
+      })
   }, [received])
 
   const onCloseNotification = useCallback(() => {
@@ -81,7 +88,7 @@ const DashboardReceivedScreen = () => {
             </Text>
           </Box>
         ) : (
-          <TableFiles sortedMessages={sortedMessages} honestInboxRegex={honestInboxRegex} />
+          <TableFiles messages={messagesAdapted} />
         )}
       </WrapperTable>
 

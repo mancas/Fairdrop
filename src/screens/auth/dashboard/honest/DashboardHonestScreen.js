@@ -52,7 +52,7 @@ const DashboardHonestScreen = () => {
 
       {mockData.length > 0 ? (
         <Box margin="58px 0 0" fitWidth>
-          <TableFiles sortedMessages={mockData} hideFrom onClick={() => console.log('Click')} />
+          <TableFiles messages={mockData} hideFrom onClick={() => console.log('Click')} />
         </Box>
       ) : (
         <Content gap="48px" margin="100px 0 0" padding="0 48px" vAlign="center">

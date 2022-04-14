@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { Table, TableBody, TableCell, TableHead, TableRow, SwitchFileIcon, Box, ButtonFlat, Text } from '../..'
 import Utils from '../../../services/Utils'
 
-export const TableDesktop = ({ className, sortedMessages, honestInboxRegex, hideFrom, onClick }) => {
+export const TableDesktop = ({ className, messages, honestInboxRegex, hideFrom, onClick }) => {
   return (
     <Table className={className}>
       <TableHead>
@@ -34,14 +34,9 @@ export const TableDesktop = ({ className, sortedMessages, honestInboxRegex, hide
       </TableHead>
 
       <TableBody>
-        {sortedMessages.map((message) => {
+        {messages.map((message) => {
           const { hash = {}, from } = message
-
           const { file = {} } = hash
-          let sanitizedFrom = from
-          if (honestInboxRegex && new RegExp(honestInboxRegex).test(from)) {
-            sanitizedFrom = 'Honest Inbox'
-          }
 
           return (
             <TableRow
@@ -69,7 +64,7 @@ export const TableDesktop = ({ className, sortedMessages, honestInboxRegex, hide
                 <TableCell>
                   <Box gap="14px" vAlign="center">
                     <Text size="sm" variant="black" truncate>
-                      {sanitizedFrom ?? 'Unkown'}
+                      {from ?? 'Unkown'}
                     </Text>
                   </Box>
                 </TableCell>
