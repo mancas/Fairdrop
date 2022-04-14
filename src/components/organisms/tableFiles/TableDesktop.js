@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { Table, TableBody, TableCell, TableHead, TableRow, SwitchFileIcon, Box, ButtonFlat, Text } from '../..'
 import Utils from '../../../services/Utils'
 
-export const TableDesktop = ({ className, messages, honestInboxRegex, hideFrom, onClick }) => {
+export const TableDesktop = ({ className, messages, hideFrom, onClick }) => {
   return (
     <Table className={className}>
       <TableHead>
