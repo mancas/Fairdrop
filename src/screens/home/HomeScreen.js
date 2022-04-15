@@ -15,39 +15,34 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React, { memo } from 'react'
-import { Icon } from '../icon/Icon'
+import styled, { css } from 'styled-components/macro'
+import { Upload } from './components/upload/Upload'
 
-const mapTypeWithIcon = [
-  {
-    name: 'video',
-    condition: ({ type }) => type.includes('video'),
-  },
-  {
-    name: 'picture',
-    condition: ({ type }) => type.includes('image'),
-  },
-  {
-    name: 'music',
-    condition: ({ type }) => type.includes('audio'),
-  },
-  {
-    name: 'file',
-    condition: ({ type }) => type.includes('file') || type.includes('pdf'),
-  },
-]
+const Layout = styled.section`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`
 
-export const getFileIcon = ({ type }) => mapTypeWithIcon.find((item) => item.condition({ type }))
+const Content = styled.div`
+  width: 418px;
+  padding: 40px;
+  box-sizing: border-box;
+`
 
-export const SwitchFileIcon = memo(function SwitchFileIcon({ type, ...rest }) {
-  const iconConf = getFileIcon({ type })
+const Carousel = styled.div`
+  flex: 1;
+`
 
-  if (!iconConf) {
-    return null
-  }
-
+export const HomeScreen = memo(({ ...props }) => {
   return (
-    <Icon {...rest} name={iconConf.name}>
-      {type}
-    </Icon>
+    <Layout>
+      <Content>
+        <Upload />
+      </Content>
+      <Carousel></Carousel>
+    </Layout>
   )
 })
+
+HomeScreen.displayName = 'HomeScreen'

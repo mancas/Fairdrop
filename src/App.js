@@ -18,7 +18,6 @@ import React, { useState, useCallback, useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import styles from './App.module.css'
 import c from 'classnames'
-import Menu from './components/molecules/menu/Menu'
 import Header from './components/molecules/header/Header'
 import { Switch, Route, useLocation } from 'react-router-dom'
 import UploadMainScreen from './screens/upload/main/UploadMainScreen'
@@ -34,6 +33,7 @@ import ProductDisclaimer from './disclaimers/product/ProductDisclaimer'
 import ReportingDisclaimer from './disclaimers/reporting/ReportingDisclaimer'
 import Dashboard from './components/layout/dashboard/Dashboard'
 import DownloadScreen from './screens/download/DownloadScreen'
+import { HomeScreen } from './screens/home/HomeScreen'
 
 const App = () => {
   const [menuOpened, setMenuOpened] = useState(false)
@@ -52,15 +52,13 @@ const App = () => {
 
   return (
     <div className={c(styles.container)}>
-      <Menu isShown={menuOpened} onToggleMenu={handleToggleMenu} />
-
       <Header />
 
       <div className={styles.content}>
         <Switch>
           <Route exact path={routes.login} component={LoginScreen} />
           <Route exact path={routes.register} component={RegisterScreen} />
-          <Route exact path={routes.upload.home} component={UploadMainScreen} />
+          <Route exact path={routes.upload.home} component={HomeScreen} />
           <Route exact path={routes.upload.flow} component={UploadFlowScreen} />
 
           <Route exact path={routes.settings.export} component={SettingsExportScreen} />

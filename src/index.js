@@ -54,27 +54,25 @@ const Root = () => {
       <GlobalCSS />
       <Router basename={`/${basename}`}>
         <MailboxProvider>
-          <ThemeProvider>
-            <SideMenuProvider>
-              <FileManagerProvider>
-                {!appReady && <SplashScreen />}
-                {appReady && (
-                  <Switch>
-                    <Route exact path={routes.mailbox.honest} component={HonestInboxScreen} />
-                    <Route component={App} />
-                  </Switch>
-                )}
-                <Toast
-                  position="bottom-center"
-                  closeButton={false}
-                  draggableDirection="y"
-                  transition={Slide}
-                  icon={false}
-                  theme="colored"
-                />
-              </FileManagerProvider>
-            </SideMenuProvider>
-          </ThemeProvider>
+          <SideMenuProvider>
+            <FileManagerProvider>
+              {!appReady && <SplashScreen />}
+              {appReady && (
+                <Switch>
+                  <Route exact path={routes.mailbox.honest} component={HonestInboxScreen} />
+                  <Route component={App} />
+                </Switch>
+              )}
+              <Toast
+                position="bottom-center"
+                closeButton={false}
+                draggableDirection="y"
+                transition={Slide}
+                icon={false}
+                theme="colored"
+              />
+            </FileManagerProvider>
+          </SideMenuProvider>
         </MailboxProvider>
       </Router>
     </SCThemeProvider>
