@@ -14,18 +14,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import styles from './App.module.css'
 import c from 'classnames'
 import Header from './components/molecules/header/Header'
-import { Switch, Route, useLocation } from 'react-router-dom'
-import UploadMainScreen from './screens/upload/main/UploadMainScreen'
+import { Switch, Route } from 'react-router-dom'
 import UploadFlowScreen from './screens/upload/flow/UploadFlowScreen'
 import LoginScreen from './screens/auth/login/LoginScreen'
 import { routes } from './config/routes'
 import RegisterScreen from './screens/auth/register/RegisterScreen'
-import { useSideMenu } from './hooks/sideMenu/useSideMenu'
 import PrivateRoute from './components/molecules/privateRoute/PrivateRoute'
 import SettingsExportScreen from './screens/settings/export/SettingsExportScreen'
 import SettingsImportScreen from './screens/settings/import/SettingsImportScreen'
@@ -36,20 +34,6 @@ import DownloadScreen from './screens/download/DownloadScreen'
 import { HomeScreen } from './screens/home/HomeScreen'
 
 const App = () => {
-  const [menuOpened, setMenuOpened] = useState(false)
-  const location = useLocation()
-  const { hideSideMenu } = useSideMenu()
-
-  const handleToggleMenu = useCallback(() => {
-    setMenuOpened(!menuOpened)
-    hideSideMenu?.()
-  }, [menuOpened, hideSideMenu])
-
-  useEffect(() => {
-    setMenuOpened(false)
-    hideSideMenu?.()
-  }, [location.pathname, location.search, hideSideMenu])
-
   return (
     <div className={c(styles.container)}>
       <Header />

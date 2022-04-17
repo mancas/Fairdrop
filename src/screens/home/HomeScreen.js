@@ -14,33 +14,54 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
-import React, { memo } from 'react'
+import { transparentize } from 'polished'
+import React, { memo, useCallback, useState } from 'react'
 import styled, { css } from 'styled-components/macro'
-import { Upload } from './components/upload/Upload'
+import { Box } from '../../components'
+import { backgrounds } from './assets'
+import Carousel from './components/carousel/Carousel'
+import { UploadFlow } from './components/uploadFlow/UploadFlow'
 
 const Layout = styled.section`
   display: flex;
   width: 100%;
   height: 100%;
+  transition: background 0.6s ease;
+
+  ${({ backgroundIdx }) => css`
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      ${`url(${backgrounds[backgroundIdx]}) no-repeat center center / cover`};
+  `}
 `
 
 const Content = styled.div`
   width: 418px;
   padding: 40px;
   box-sizing: border-box;
+  background: ${({ theme }) => transparentize(0.06, theme?.colors?.white?.main)};
+  backdrop-filter: blur(20px);
 `
 
-const Carousel = styled.div`
+const CarouselWrapper = styled(Box)`
   flex: 1;
+  padding: 130px;
 `
 
-export const HomeScreen = memo(({ ...props }) => {
+export const HomeScreen = memo(() => {
+  const [backgroundIdx, setBackgroundIdx] = useState(0)
+
+  const handleSlideChange = useCallback((idx) => {
+    setBackgroundIdx(idx)
+  }, [])
+
   return (
-    <Layout>
+    <Layout backgroundIdx={backgroundIdx}>
       <Content>
-        <Upload />
+        <UploadFlow />
       </Content>
-      <Carousel></Carousel>
+      <CarouselWrapper vAlign="center" direction="column">
+        <Carousel onItemChange={handleSlideChange} />
+      </CarouselWrapper>
     </Layout>
   )
 })

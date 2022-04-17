@@ -18,11 +18,12 @@ import React, { memo, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 import styled from 'styled-components/macro'
-import { Box, Button, Tab, Tabs, Text } from '../../../../components'
-import { DropArea } from '../../../../components/molecules/dropArea/DropArea'
-import { FileInput } from '../../../../components/molecules/fileInput/FileInput'
-import { parameters } from '../../../../config/parameters'
-import { FILE_UPLOAD_TYPES, useFileManager } from '../../../../hooks/fileManager/useFileManager'
+import { Box, Button, Tab, Tabs, Text, DropArea, FileInput } from '../../../../../../components'
+import { parameters } from '../../../../../../config/parameters'
+import { FILE_UPLOAD_TYPES, useFileManager } from '../../../../../../hooks/fileManager/useFileManager'
+import { useMailbox } from '../../../../../../hooks/mailbox/useMailbox'
+import { routes } from '../../../../../../config/routes'
+import { useHistory } from 'react-router-dom'
 
 const Container = styled(Box)`
   width: 100%;
@@ -44,9 +45,11 @@ const ActionButton = styled(Button)`
 
 const noop = () => {}
 
-export const Upload = memo(({ ...props }) => {
+export const SelectFile = memo(({ onStartUpload }) => {
   const [{ files }, { setFiles, resetFileManager }] = useFileManager()
   const { getRootProps, isDragActive } = useDropzone({ onDrop: noop })
+  const [{ mailbox }] = useMailbox()
+  const history = useHistory()
 
   const checkFileSize = useCallback((file) => {
     const hasEasterEggEnabled = parseInt(localStorage.getItem('hasEnabledMaxFileSizeEasterEgg')) === 1
@@ -58,12 +61,15 @@ export const Upload = memo(({ ...props }) => {
     return isValidSize
   }, [])
 
+  const handleLogin = useCallback(() => {
+    history.push(routes.login)
+  }, [history])
+
   const handleClean = useCallback(() => {
     resetFileManager?.()
   }, [resetFileManager])
 
   const handleQuickFileDrop = useCallback((file) => {
-    console.info(file)
     if (!checkFileSize(file)) {
       return
     }
@@ -88,12 +94,14 @@ export const Upload = memo(({ ...props }) => {
             onDrop={handleQuickFileDrop}
           />
 
-          <DropArea
-            icon="folderEncrypted"
-            headline="Encrypted transfer"
-            description="Drop your file here"
-            onDrop={handleEncryptedFileDrop}
-          />
+          {mailbox && (
+            <DropArea
+              icon="folderEncrypted"
+              headline="Encrypted transfer"
+              description="Drop your file here"
+              onDrop={handleEncryptedFileDrop}
+            />
+          )}
         </DropAreaContainer>
       )}
 
@@ -113,13 +121,23 @@ export const Upload = memo(({ ...props }) => {
               Or simply drop your file here
             </Text>
 
-            <ActionButton variant="primary">Get transfer link</ActionButton>
+            <ActionButton variant="primary" onClick={onStartUpload} disabled={!files?.[0]}>
+              Get transfer link
+            </ActionButton>
           </TabContent>
 
           <TabContent direction="column" gap="16px">
-            <Text size="m" weight="300" variant="black">
-              Send any file to any Fairdrop user in a more secure way. You must log in first.
-            </Text>
+            {!mailbox && (
+              <>
+                <Text size="m" weight="300" variant="black">
+                  Send any file to any Fairdrop user in a more secure way. You must log in first.
+                </Text>
+
+                <ActionButton variant="primary" onClick={handleLogin}>
+                  Log in
+                </ActionButton>
+              </>
+            )}
           </TabContent>
         </Tabs>
       )}
@@ -127,4 +145,4 @@ export const Upload = memo(({ ...props }) => {
   )
 })
 
-Upload.displayName = 'Upload'
+SelectFile.displayName = 'SelectFile'
