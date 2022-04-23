@@ -15,9 +15,9 @@
 // along with the FairDataSociety library. If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react'
-import CircleLoader from '../../atoms/circleLoader/CircleLoader'
 import Text from '../../atoms/text/Text'
 import styled from 'styled-components/macro'
+import { CircleLoader } from '../../atoms/circleLoader/CircleLoader'
 
 const Container = styled.section`
   width: 100%;

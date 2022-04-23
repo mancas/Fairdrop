@@ -109,12 +109,12 @@ const Container = styled.div`
   position: relative;
 `
 
-const CircleLoader = ({ className, variant = 'white' }) => {
+export const CircleLoader = React.memo(({ className, variant = 'white' }) => {
   return (
     <Container className={className} variant={variant}>
       <Bullet variant={variant} />
     </Container>
   )
-}
+})
 
-export default React.memo(CircleLoader)
+CircleLoader.displayName = 'CircleLoader'
