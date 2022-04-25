@@ -43,12 +43,9 @@ const DashboardReceivedScreen = () => {
 
   const messagesAdapted = useMemo(() => {
     return received
+      .filter((message) => !new RegExp(honestInboxRegex).test(message.from))
       .sort((a, b) => {
         return b?.hash?.time - a?.hash?.time
-      })
-      .map((message) => {
-        message.from = new RegExp(honestInboxRegex).test(message.from) ? 'Honest Inbox' : message.from
-        return message
       })
   }, [received])
 
