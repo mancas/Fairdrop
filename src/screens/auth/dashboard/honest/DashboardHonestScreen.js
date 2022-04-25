@@ -7,6 +7,7 @@ import { useMailbox } from '../../../../hooks/mailbox/useMailbox'
 import { toast } from 'react-toastify'
 import WorkingLayout from '../../../../components/layout/working/WorkingLayout'
 import { MyHonestInbox } from './components/MyHonestInbox'
+import Utils from '../../../../services/Utils'
 
 const Container = styled(Box)`
   height: 100%;
@@ -31,18 +32,14 @@ const StyledMyHonestInbox = styled(MyHonestInbox)`
   margin-bottom: 30px;
 `
 
-const honestInboxRegex = /anonymous-\d{13}/gm
-
 const DashboardHonestScreen = () => {
   const [{ received }, { getReceivedMessages }] = useMailbox()
   const [isFetchingMessages, setIsFetchingMessages] = useState(true)
 
   const messagesAdapted = useMemo(() => {
-    return received
-      .filter((message) => new RegExp(honestInboxRegex).test(message.from))
-      .sort((a, b) => {
-        return b?.hash?.time - a?.hash?.time
-      })
+    return received.filter(Utils.isAnonymousMessage).sort((a, b) => {
+      return b?.hash?.time - a?.hash?.time
+    })
   }, [received])
 
   useEffect(() => {
