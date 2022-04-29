@@ -221,10 +221,6 @@ export const MailboxProvider = ({ children }) => {
     })
   }, [])
 
-  const resetMailbox = useCallback(() => {
-    dispatch({ type: RESET })
-  }, [])
-
   const getReceivedMessages = useCallback(() => {
     return (
       FDSInstance.currentAccount
@@ -436,6 +432,10 @@ export const MailboxProvider = ({ children }) => {
     await updateAppState(newState)
   }, [])
 
+  const logout = useCallback(() => {
+    dispatch({ type: RESET })
+  }, [])
+
   // Listen to mailbox updates
   useEffect(() => {
     if (!state.mailbox) {
@@ -477,7 +477,7 @@ export const MailboxProvider = ({ children }) => {
           initSentry,
           exportMailboxes,
           importMailbox,
-          resetMailbox,
+          logout,
           getReceivedMessages,
           getSentMessages,
           getConsentsMessages,
