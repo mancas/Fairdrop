@@ -427,7 +427,7 @@ export const MailboxProvider = ({ children }) => {
     const appState = await getAppState()
     const newState = {
       ...appState,
-      markedAsRead: [...(appState?.markedAsRead ?? []), message?.id],
+      markedAsRead: [...(appState?.markedAsRead ?? []), message?.address],
     }
     await updateAppState(newState)
   }, [])
